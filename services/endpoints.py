@@ -72,3 +72,35 @@ def coach():
         return jsonify({'reply': reply}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+# Daily Habit Tracker endpoints
+from flask import request, jsonify
+from src.service.habit_service import habit_service
+
+@app.route('/habit', methods=['POST'])
+def add_habit():
+    data = request.get_json()
+    date = data.get('date')
+    habit = data.get('habit')
+    done = data.get('done', False)
+    if not date or not habit:
+        return jsonify({'error':'date and habit required'}), 400
+    entry = habit_service.save_status(date, habit, done)
+    return jsonify(entry), 201
+
+@app.route('/habit', methods=['GET'])
+def fetch_habit():
+    date = request.args.get('date')
+    if not date:
+        return jsonify({'error':'date query param required'}), 400
+    status = habit_service.get_status(date)
+    return jsonify({'date':date, 'status':status}), 200
+
+@app.route('/habit/progress', methods=['GET'])
+def fetch_progress():
+    week_start = request.args.get('week_start')
+    if not week_start:
+        return jsonify({'error':'week_start query param required'}), 400
+    progress = habit_service.get_weekly_progress(week_start)
+    return jsonify({'week_start': week_start, 'progress': progress}), 200
