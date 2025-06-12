@@ -36,3 +36,12 @@ New endpoints for sentiment analysis of journal entries:
 - **GET** `/sentiment-trends?start=YYYY-MM-DD&end=YYYY-MM-DD` ➔ returns weekly average polarity between dates.
 
 Requires `textblob` dependency (`pip install textblob`).
+
+
+## AI-Powered Mental Health Coach
+
+- **Endpoint**: POST `/coach`  
+  - Request JSON: `{ history: Array<{role: String, content: String}> }`  
+  - Response JSON: `{ reply: String }`  
+- **Frontend Component**: `frontend/components/ChatCoach.jsx`  
+- **Service**: `frontend/services/coachService.js`  

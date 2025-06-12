@@ -55,3 +55,20 @@ def sentiment_trends():
         return jsonify({'error': 'start and end query params required'}), 400
     trends = sentiment_service.get_weekly_trends(start, end)
     return jsonify(trends), 200
+
+
+# AI-Powered Mental Health Coach endpoint
+from flask import request, jsonify
+from src.service.ai_coach_service import coach_service
+
+@app.route('/coach', methods=['POST'])
+def coach():
+    data = request.get_json()
+    history = data.get('history', [])
+    if not isinstance(history, list) or not history:
+        return jsonify({'error': 'message history required'}), 400
+    try:
+        reply = coach_service.get_response(history)
+        return jsonify({'reply': reply}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
