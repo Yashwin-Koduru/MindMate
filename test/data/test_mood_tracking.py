@@ -1,6 +1,4 @@
-
-
-def test_save_and_mood_service.get_entry():
+def test_save_and_mood_service():
     # Assuming mood_service.save_entry and mood_service.get_entry imported
     from src.service.mood_service import mood_service
     date = '2025-06-12'

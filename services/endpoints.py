@@ -1,26 +1,3 @@
-
-
-# Daily Mood Tracking endpoints
-from flask import request, jsonify
-def add_mood():
-    data = request.get_json()
-    date = data.get('date')
-    mood = data.get('mood')
-    note = data.get('note', '')
-    if not date or mood is None:
-        return jsonify({'error': 'date and mood required'}), 400
-    return jsonify(entry), 201
-
-def fetch_mood():
-    date = request.args.get('date')
-    if not date:
-        return jsonify({'error': 'date query param required'}), 400
-    entry = get_mood_entry(date)
-    if not entry:
-        return jsonify({'error': 'entry not found'}), 404
-    return jsonify(entry), 200
-
-
 # Daily Mood Tracking endpoints
 from flask import request, jsonify
 from src.service.mood_service import mood_service
@@ -45,3 +22,36 @@ def fetch_mood():
     if not entry:
         return jsonify({'error': 'entry not found'}), 404
     return jsonify(entry), 200
+
+
+# AI-Driven Sentiment Analysis endpoints
+from src.service.sentiment_service import sentiment_service
+
+@app.route('/sentiment', methods=['POST'])
+def add_sentiment():
+    data = request.get_json()
+    date = data.get('date')
+    text = data.get('text')
+    if not date or not text:
+        return jsonify({'error': 'date and text required'}), 400
+    entry = sentiment_service.save_entry(date, text)
+    return jsonify(entry), 201
+
+@app.route('/sentiment', methods=['GET'])
+def get_sentiment():
+    date = request.args.get('date')
+    if not date:
+        return jsonify({'error': 'date query param required'}), 400
+    entry = sentiment_service.get_entry(date)
+    if not entry:
+        return jsonify({'error': 'entry not found'}), 404
+    return jsonify(entry), 200
+
+@app.route('/sentiment-trends', methods=['GET'])
+def sentiment_trends():
+    start = request.args.get('start')
+    end = request.args.get('end')
+    if not start or not end:
+        return jsonify({'error': 'start and end query params required'}), 400
+    trends = sentiment_service.get_weekly_trends(start, end)
+    return jsonify(trends), 200

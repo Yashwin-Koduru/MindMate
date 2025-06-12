@@ -27,3 +27,12 @@ flask run
 ```bash
 pytest test/
 ```
+
+## AI-Driven Sentiment Analysis
+
+New endpoints for sentiment analysis of journal entries:
+- **POST** `/sentiment` `{ date: 'YYYY-MM-DD', text: 'entry text' }` ➔ analyzes and stores polarity & subjectivity.
+- **GET** `/sentiment?date=YYYY-MM-DD` ➔ retrieves analysis for a given date.
+- **GET** `/sentiment-trends?start=YYYY-MM-DD&end=YYYY-MM-DD` ➔ returns weekly average polarity between dates.
+
+Requires `textblob` dependency (`pip install textblob`).
