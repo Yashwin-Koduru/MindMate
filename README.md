@@ -45,3 +45,13 @@ Requires `textblob` dependency (`pip install textblob`).
   - Response JSON: `{ reply: String }`  
 - **Frontend Component**: `frontend/components/ChatCoach.jsx`  
 - **Service**: `frontend/services/coachService.js`  
+
+
+## Daily Habit Tracker
+
+Track habits (`meditation`, `hydration`, `physical`) with:
+- POST `/habit` JSON `{date, habit, done}`
+- GET `/habit?date=YYYY-MM-DD`
+- GET `/habit/progress?week_start=YYYY-MM-DD`
+
+Frontend component: `HabitTracker.jsx`, service: `habitService.js`.
