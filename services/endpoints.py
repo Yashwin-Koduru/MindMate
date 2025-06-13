@@ -33,7 +33,6 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 # Wellness Suggestions Endpoints
-from flask import Flask, request, jsonify
 from src.service.feature_helper import analyze_mood_and_habits
 from config.firebase_config import db
 
@@ -51,7 +50,6 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 # Journal Templates Endpoints
-from flask import Flask, request, jsonify
 from config.firebase_config import db
 from src.service.feature_helper import get_templates, format_entry
 
@@ -82,7 +80,6 @@ from services.journal_api import journal_bp
 app.register_blueprint(journal_bp)
 
 # Daily Mood Tracking endpoints
-from flask import request, jsonify
 from src.service.mood_service import mood_service
 
 @app.route('/mood', methods=['POST'])
@@ -141,7 +138,6 @@ def sentiment_trends():
 
 
 # AI-Powered Mental Health Coach endpoint
-from flask import request, jsonify
 from src.service.ai_coach_service import coach_service
 
 @app.route('/coach', methods=['POST'])
@@ -158,7 +154,6 @@ def coach():
 
 
 # Daily Habit Tracker endpoints
-from flask import request, jsonify
 from src.service.habit_service import habit_service
 
 @app.route('/habit', methods=['POST'])
